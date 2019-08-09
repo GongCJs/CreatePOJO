@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gcjlearn.mapper.MessageMapper">
+  <resultMap id="BaseResultMap" type="com.gcjlearn.pojo.Message">
+    <id column="m_id" jdbcType="VARCHAR" property="mId" />
+    <id column="u_id_from" jdbcType="VARCHAR" property="uIdFrom" />
+    <result column="u_id_to" jdbcType="VARCHAR" property="uIdTo" />
+    <result column="m_content" jdbcType="VARCHAR" property="mContent" />
+    <result column="create_time" jdbcType="DATE" property="createTime" />
+    <result column="update_time" jdbcType="DATE" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    m_id, u_id_from, u_id_to, m_content, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from message
+    where m_id = #{mId,jdbcType=VARCHAR}
+      and u_id_from = #{uIdFrom,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from message
+    where m_id = #{mId,jdbcType=VARCHAR}
+      and u_id_from = #{uIdFrom,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.gcjlearn.pojo.Message">
+    insert into message (m_id, u_id_from, u_id_to, 
+      m_content, create_time, update_time
+      )
+    values (#{mId,jdbcType=VARCHAR}, #{uIdFrom,jdbcType=VARCHAR}, #{uIdTo,jdbcType=VARCHAR}, 
+      #{mContent,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, #{updateTime,jdbcType=DATE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.gcjlearn.pojo.Message">
+    insert into message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mId != null">
+        m_id,
+      </if>
+      <if test="uIdFrom != null">
+        u_id_from,
+      </if>
+      <if test="uIdTo != null">
+        u_id_to,
+      </if>
+      <if test="mContent != null">
+        m_content,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mId != null">
+        #{mId,jdbcType=VARCHAR},
+      </if>
+      <if test="uIdFrom != null">
+        #{uIdFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="uIdTo != null">
+        #{uIdTo,jdbcType=VARCHAR},
+      </if>
+      <if test="mContent != null">
+        #{mContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gcjlearn.pojo.Message">
+    update message
+    <set>
+      <if test="uIdTo != null">
+        u_id_to = #{uIdTo,jdbcType=VARCHAR},
+      </if>
+      <if test="mContent != null">
+        m_content = #{mContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=DATE},
+      </if>
+    </set>
+    where m_id = #{mId,jdbcType=VARCHAR}
+      and u_id_from = #{uIdFrom,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gcjlearn.pojo.Message">
+    update message
+    set u_id_to = #{uIdTo,jdbcType=VARCHAR},
+      m_content = #{mContent,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=DATE},
+      update_time = #{updateTime,jdbcType=DATE}
+    where m_id = #{mId,jdbcType=VARCHAR}
+      and u_id_from = #{uIdFrom,jdbcType=VARCHAR}
+  </update>
+</mapper>
